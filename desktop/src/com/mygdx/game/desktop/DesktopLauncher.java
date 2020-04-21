@@ -7,8 +7,8 @@ import com.mygdx.game.RunnerGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 1400;
-		config.height = 700;
+		config.width = 900;
+		config.height = 675;
 		config.x = 50;
 		config.y = 50;
 		new LwjglApplication(new RunnerGame(), config);

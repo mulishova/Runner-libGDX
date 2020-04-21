@@ -22,7 +22,7 @@ public class RunnerGame extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		gameScreen = new GameScreen(this, batch);
-		viewport = new FitViewport(1400, 700); // подстраивает картинку под размер экрана
+		viewport = new FitViewport(900, 675); // подстраивает картинку под размер экрана
 		setScreen(gameScreen);
 	}
 
