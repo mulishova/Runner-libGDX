@@ -22,16 +22,13 @@ public class RunnerGame extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		gameScreen = new GameScreen(this, batch);
-		viewport = new FitViewport(900, 675); // подстраивает картинку под размер экрана
+		viewport = new FitViewport(1000, 625); // подстраивает картинку под размер экрана
 		setScreen(gameScreen);
 	}
 
 	@Override
 	public void render () { // <= 60 кадров в секунду
 		float dt = Gdx.graphics.getDeltaTime(); // сколько прошло времени с последней отрисовки
-
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		getScreen().render(dt);
 	}
