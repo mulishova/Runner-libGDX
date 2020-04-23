@@ -22,7 +22,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() { // подготовка данных для экрана
-        textureBackground = new Texture("background.jpg");
+        textureBackground = new Texture("background.png");
         textureGround = new Texture("ground.png");
     }
 
@@ -30,21 +30,21 @@ public class GameScreen implements Screen {
     public void render(float delta) { // отрисовка 60 кадров в секунду
         update(delta);
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
         batch.draw(textureBackground, 0, 0);
 
-        for (int i = 0; i < 9; i++) {
-            batch.draw(textureGround, 135 * i - globalX % 135, 0);
+        for (int i = 0; i < 16; i++) {
+            batch.draw(textureGround, 70 * i - globalX % 70, 0);
         }
 
         batch.end();
     }
 
     public void update (float dt) {
-        globalX += 135 * dt;
+        globalX += 70 * dt;
     }
 
     @Override
