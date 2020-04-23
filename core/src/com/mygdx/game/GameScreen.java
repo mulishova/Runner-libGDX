@@ -14,6 +14,14 @@ public class GameScreen implements Screen {
     private Texture textureGround;
 
     private float globalX; // задаем движение земли
+    private float groundHeight = 70.0f;
+    private float playerAnchor = 200.0f; // точка, к которой привязан персонаж, координата X
+
+    private Player player;
+
+    public float getPlayerAnchor() {
+        return playerAnchor;
+    }
 
     public GameScreen (RunnerGame runnerGame, SpriteBatch batch) {
         this.runnerGame = runnerGame;
@@ -24,6 +32,7 @@ public class GameScreen implements Screen {
     public void show() { // подготовка данных для экрана
         textureBackground = new Texture("background.png");
         textureGround = new Texture("ground.png");
+        player = new Player(this);
     }
 
     @Override
@@ -39,6 +48,8 @@ public class GameScreen implements Screen {
         for (int i = 0; i < 16; i++) {
             batch.draw(textureGround, 70 * i - globalX % 70, 0);
         }
+
+        player.render(batch);
 
         batch.end();
     }
