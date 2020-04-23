@@ -55,6 +55,7 @@ public class GameScreen implements Screen {
     }
 
     public void update (float dt) {
+        player.update(dt);
         globalX += 70 * dt;
     }
 

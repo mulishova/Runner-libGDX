@@ -15,6 +15,7 @@ public class Player {
     private final int HEIGHT = 80;
 
     private float score; // очки персонажа
+    private float time; // время бега персонажа
 
     public Vector2 getPosition() {
         return position;
@@ -29,6 +30,12 @@ public class Player {
     }
 
     public void render (SpriteBatch batch) {
-        batch.draw(texture, gameScreen.getPlayerAnchor(), position.y, 0, 0, WIDTH, HEIGHT);
+        int frame = (int) (time / 0.2f); // скорость анимации
+        frame = frame % 2;
+        batch.draw(texture, gameScreen.getPlayerAnchor(), position.y, frame * 100, 0, WIDTH, HEIGHT);
+    }
+
+    public void update (float dt) {
+        time += dt;
     }
 }
