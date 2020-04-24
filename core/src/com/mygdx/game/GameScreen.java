@@ -13,7 +13,6 @@ public class GameScreen implements Screen {
     private Texture textureBackground;
     private Texture textureGround;
 
-    private float globalX; // задаем движение земли
     private float groundHeight = 70.0f;
     private float playerAnchor = 200.0f; // точка, к которой привязан персонаж, координата X
 
@@ -46,7 +45,7 @@ public class GameScreen implements Screen {
         batch.draw(textureBackground, 0, 0);
 
         for (int i = 0; i < 16; i++) {
-            batch.draw(textureGround, 70 * i - globalX % 70, 0);
+            batch.draw(textureGround, groundHeight * i - player.getPosition().x % groundHeight, 0);
         }
 
         player.render(batch);
@@ -56,7 +55,6 @@ public class GameScreen implements Screen {
 
     public void update (float dt) {
         player.update(dt);
-        globalX += 70 * dt;
     }
 
     @Override

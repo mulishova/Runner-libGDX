@@ -36,6 +36,7 @@ public class Player {
     }
 
     public void update (float dt) {
-        time += dt;
+        time += velocity.x * dt / 100.0f;
+        position.mulAdd(velocity, dt);
     }
 }
