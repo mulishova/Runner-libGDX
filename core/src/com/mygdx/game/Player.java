@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player {
@@ -11,6 +12,7 @@ public class Player {
     private Texture texture;
     private Vector2 position; // координаты игрока
     private Vector2 velocity; // скорость персонажа
+    private Rectangle rectangle;
 
     private final int WIDTH = 100; // размеры персонажа
     private final int HEIGHT = 80;
@@ -22,11 +24,16 @@ public class Player {
         return position;
     }
 
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
     public Player (GameScreen gameScreen) {
         this.gameScreen = gameScreen;
         this.texture = new Texture("player.png");
         this.position = new Vector2(0, 70);
         this.velocity = new Vector2(150.0f, 0.0f);
+        this.rectangle = new Rectangle(position.x, position.y, WIDTH, HEIGHT);
         this.score = 0;
     }
 
@@ -53,5 +60,6 @@ public class Player {
 
         velocity.x += 3.0f * dt;
         score += velocity.x * dt / 5.0f;
+        rectangle.setPosition(position.x, position.y);
     }
 }

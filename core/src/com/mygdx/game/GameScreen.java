@@ -19,6 +19,8 @@ public class GameScreen implements Screen {
     private float groundHeight = 70.0f;
     private float playerAnchor = 200.0f; // точка, к которой привязан персонаж, координата X
 
+    private boolean gameOver;
+
     private Player player;
     private Stone[] enemies;
 
@@ -48,6 +50,8 @@ public class GameScreen implements Screen {
         for (int i = 1; i < 5; i++) {
             enemies[i] = new Stone(textureStone, new Vector2(enemies[i - 1].getPosition().x + MathUtils.random(300, 1000), groundHeight));
         }
+
+        gameOver = false;
     }
 
     @Override
@@ -86,11 +90,20 @@ public class GameScreen implements Screen {
     }
 
     public void update (float dt) {
-        player.update(dt);
+        if (!gameOver) {
+            player.update(dt);
 
-        for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i].getPosition().x < player.getPosition().x - playerAnchor - 100) { // если заехали за левую сторону экрана
-                enemies[i].setPosition(getRightestEnemy() + MathUtils.random(300, 1000), groundHeight);
+            for (int i = 0; i < enemies.length; i++) {
+                if (enemies[i].getPosition().x < player.getPosition().x - playerAnchor - 100) { // если заехали за левую сторону экрана
+                    enemies[i].setPosition(getRightestEnemy() + MathUtils.random(300, 1000), groundHeight);
+                }
+            }
+
+            for (int i = 0; i < enemies.length; i++) {
+                if (enemies[i].getRectangle().overlaps(player.getRectangle())) {
+                    gameOver = true;
+                    break;
+                }
             }
         }
     }
