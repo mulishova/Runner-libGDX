@@ -43,10 +43,10 @@ public class GameScreen implements Screen {
 
         player = new Player(this);
 
-        enemies = new Stone[10];
+        enemies = new Stone[5];
         enemies[0] = new Stone(textureStone, new Vector2(800, groundHeight));
-        for (int i = 1; i < 10; i++) {
-            enemies[i] = new Stone(textureStone, new Vector2(enemies[i - 1].getPosition().x + MathUtils.random(200, 1000), groundHeight));
+        for (int i = 1; i < 5; i++) {
+            enemies[i] = new Stone(textureStone, new Vector2(enemies[i - 1].getPosition().x + MathUtils.random(300, 1000), groundHeight));
         }
     }
 
@@ -73,8 +73,26 @@ public class GameScreen implements Screen {
         batch.end();
     }
 
+    private float getRightestEnemy() { // координата Х самого правого камня
+        float maxValue = 0.0f;
+
+        for (int i = 0; i < enemies.length; i++) {
+            if (maxValue < enemies[i].getPosition().x) {
+                maxValue = enemies[i].getPosition().x;
+            }
+        }
+
+        return maxValue;
+    }
+
     public void update (float dt) {
         player.update(dt);
+
+        for (int i = 0; i < enemies.length; i++) {
+            if (enemies[i].getPosition().x < player.getPosition().x - playerAnchor - 100) { // если заехали за левую сторону экрана
+                enemies[i].setPosition(getRightestEnemy() + MathUtils.random(300, 1000), groundHeight);
+            }
+        }
     }
 
     @Override
