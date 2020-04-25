@@ -22,6 +22,10 @@ public class GameScreen implements Screen {
         return playerAnchor;
     }
 
+    public float getGroundHeight() {
+        return groundHeight;
+    }
+
     public GameScreen (RunnerGame runnerGame, SpriteBatch batch) {
         this.runnerGame = runnerGame;
         this.batch = batch;
