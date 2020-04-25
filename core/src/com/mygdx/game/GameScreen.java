@@ -5,6 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 
 public class GameScreen implements Screen {
     private RunnerGame runnerGame;
@@ -12,11 +14,13 @@ public class GameScreen implements Screen {
 
     private Texture textureBackground;
     private Texture textureGround;
+    private Texture textureStone;
 
     private float groundHeight = 70.0f;
     private float playerAnchor = 200.0f; // точка, к которой привязан персонаж, координата X
 
     private Player player;
+    private Stone[] enemies;
 
     public float getPlayerAnchor() {
         return playerAnchor;
@@ -35,7 +39,15 @@ public class GameScreen implements Screen {
     public void show() { // подготовка данных для экрана
         textureBackground = new Texture("background.png");
         textureGround = new Texture("ground.png");
+        textureStone = new Texture("stone.png");
+
         player = new Player(this);
+
+        enemies = new Stone[10];
+        enemies[0] = new Stone(textureStone, new Vector2(800, groundHeight));
+        for (int i = 1; i < 10; i++) {
+            enemies[i] = new Stone(textureStone, new Vector2(enemies[i - 1].getPosition().x + MathUtils.random(200, 1000), groundHeight));
+        }
     }
 
     @Override
@@ -53,6 +65,10 @@ public class GameScreen implements Screen {
         }
 
         player.render(batch);
+
+        for (int i = 0; i < enemies.length; i++) {
+            enemies[i].render(batch, player.getPosition().x - playerAnchor);
+        }
 
         batch.end();
     }
@@ -86,5 +102,6 @@ public class GameScreen implements Screen {
     public void dispose() { // освобождение ресурсов
         textureBackground.dispose();
         textureGround.dispose();
+        textureStone.dispose();
     }
 }

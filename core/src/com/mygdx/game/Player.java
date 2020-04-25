@@ -26,7 +26,7 @@ public class Player {
         this.gameScreen = gameScreen;
         this.texture = new Texture("player.png");
         this.position = new Vector2(0, 70);
-        this.velocity = new Vector2(100.0f, 0.0f);
+        this.velocity = new Vector2(150.0f, 0.0f);
         this.score = 0;
     }
 
@@ -42,13 +42,16 @@ public class Player {
         } else {
             position.y = gameScreen.getGroundHeight();
             velocity.y = 0.0f;
+            time += velocity.x * dt / 100.0f;
 
             if (Gdx.input.justTouched()) { // если ткнуть в экран
                 velocity.y = 500.0f;
             }
         }
 
-        time += velocity.x * dt / 100.0f;
         position.mulAdd(velocity, dt);
+
+        velocity.x += 3.0f * dt;
+        score += velocity.x * dt / 5.0f;
     }
 }
