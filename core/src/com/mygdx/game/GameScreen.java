@@ -26,6 +26,7 @@ public class GameScreen implements Screen {
     private float playerAnchor = 200.0f; // точка, к которой привязан персонаж, координата X
 
     private boolean gameOver;
+    private float time;
 
     private Player player;
     private Stone[] enemies;
@@ -96,6 +97,13 @@ public class GameScreen implements Screen {
 
         font48.draw(batch, "SCORE: " + (int)player.getScore(), 20, 600);
 
+        if (gameOver) {
+            font96.draw(batch, "GAME OVER", 380, 400);
+            font48.setColor(1, 1, 1, 0.5f + 0.5f * (float) Math.sin(time * 4.0f));
+            font48.draw(batch, "Tap to RESTART", 410, 300);
+            font48.setColor(1, 1, 1, 1);
+        }
+
         batch.end();
     }
 
@@ -112,6 +120,8 @@ public class GameScreen implements Screen {
     }
 
     public void update (float dt) {
+        time += dt;
+
         if (!gameOver) {
             player.update(dt);
 
