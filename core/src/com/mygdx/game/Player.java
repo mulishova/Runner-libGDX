@@ -41,6 +41,12 @@ public class Player {
         this.score = 0;
     }
 
+    public void restart() {
+        position.set(0, gameScreen.getGroundHeight());
+        score = 0;
+        rectangle.setPosition(position);
+    }
+
     public void render (SpriteBatch batch) {
         int frame = (int) (time / 0.2f); // скорость анимации
         frame = frame % 2;
