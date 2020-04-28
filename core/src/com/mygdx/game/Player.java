@@ -28,11 +28,15 @@ public class Player {
         return rectangle;
     }
 
+    public float getScore() {
+        return score;
+    }
+
     public Player (GameScreen gameScreen) {
         this.gameScreen = gameScreen;
         this.texture = new Texture("player.png");
         this.position = new Vector2(0, 70);
-        this.velocity = new Vector2(150.0f, 0.0f);
+        this.velocity = new Vector2(250.0f, 0.0f);
         this.rectangle = new Rectangle(position.x, position.y, WIDTH, HEIGHT);
         this.score = 0;
     }
@@ -58,8 +62,8 @@ public class Player {
 
         position.mulAdd(velocity, dt);
 
-        velocity.x += 3.0f * dt;
-        score += velocity.x * dt / 5.0f;
+        // velocity.x += 3.0f * dt; // постепенное увеличение скорости
+        score += velocity.x * dt / 15.0f;
         rectangle.setPosition(position.x, position.y);
     }
 }

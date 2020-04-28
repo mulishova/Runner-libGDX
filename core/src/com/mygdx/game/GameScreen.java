@@ -2,9 +2,12 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
@@ -15,6 +18,9 @@ public class GameScreen implements Screen {
     private Texture textureBackground;
     private Texture textureGround;
     private Texture textureStone;
+
+    private BitmapFont font48;
+    private BitmapFont font96;
 
     private float groundHeight = 70.0f;
     private float playerAnchor = 200.0f; // точка, к которой привязан персонаж, координата X
@@ -52,6 +58,20 @@ public class GameScreen implements Screen {
         }
 
         gameOver = false;
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("amatic.ttf")); // шрифт из ttf файла
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        parameter.size = 48; // размер букв
+        parameter.borderColor = Color.DARK_GRAY; // границы
+        parameter.borderWidth = 2; // толщина границы
+        parameter.shadowOffsetX = 2; // тень
+        parameter.shadowOffsetY = -2;
+        parameter.shadowColor = Color.DARK_GRAY;
+        font48 = generator.generateFont(parameter); // шрифт
+        parameter.size = 96;
+        font96 = generator.generateFont(parameter);
+        generator.dispose();
     }
 
     @Override
@@ -73,6 +93,8 @@ public class GameScreen implements Screen {
         for (int i = 0; i < enemies.length; i++) {
             enemies[i].render(batch, player.getPosition().x - playerAnchor);
         }
+
+        font48.draw(batch, "SCORE: " + (int)player.getScore(), 20, 600);
 
         batch.end();
     }
