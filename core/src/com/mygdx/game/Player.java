@@ -41,6 +41,12 @@ public class Player {
         this.score = 0;
     }
 
+    public void restart() {
+        position.set(0, gameScreen.getGroundHeight());
+        score = 0;
+        rectangle.setPosition(position);
+    }
+
     public void render (SpriteBatch batch) {
         int frame = (int) (time / 0.2f); // скорость анимации
         frame = frame % 2;
@@ -54,7 +60,9 @@ public class Player {
             position.y = gameScreen.getGroundHeight();
             velocity.y = 0.0f;
             time += velocity.x * dt / 100.0f;
+        }
 
+        if (position.y >= gameScreen.getGroundHeight() && position.y < 400) {
             if (Gdx.input.justTouched()) { // если ткнуть в экран
                 velocity.y = 500.0f;
             }

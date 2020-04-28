@@ -107,6 +107,17 @@ public class GameScreen implements Screen {
         batch.end();
     }
 
+    public void restart() { // перезапуск игры после gameOver
+        gameOver = false;
+
+        enemies[0].setPosition(800, groundHeight);
+        for (int i = 1; i < 5; i++) {
+            enemies[i].setPosition(enemies[i - 1].getPosition().x + MathUtils.random(300, 1000), groundHeight);
+        }
+
+        player.restart();
+    }
+
     private float getRightestEnemy() { // координата Х самого правого камня
         float maxValue = 0.0f;
 
@@ -137,7 +148,10 @@ public class GameScreen implements Screen {
                     break;
                 }
             }
-        }
+        } else
+            if (Gdx.input.justTouched()) {
+                restart();
+            }
     }
 
     @Override
