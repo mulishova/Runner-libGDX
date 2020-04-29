@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -33,6 +34,7 @@ public class GameScreen implements Screen {
     private Stone[] enemies;
 
     private Music music;
+    private Sound playerJumpSound;
 
     public float getPlayerAnchor() {
         return playerAnchor;
@@ -53,10 +55,12 @@ public class GameScreen implements Screen {
         textureGround = new Texture("ground.png");
         textureStone = new Texture("stone.png");
 
-        player = new Player(this);
+        playerJumpSound = Gdx.audio.newSound(Gdx.files.internal("playerSound.ogg"));
+        player = new Player(this, playerJumpSound);
 
         music = Gdx.audio.newMusic(Gdx.files.internal("main.mp3"));
         music.setLooping(true); // зациклить
+        music.setVolume(0.05f);
         music.play();
 
         enemies = new Stone[5];
@@ -188,5 +192,6 @@ public class GameScreen implements Screen {
         textureGround.dispose();
         textureStone.dispose();
         music.dispose();
+        playerJumpSound.dispose();
     }
 }
