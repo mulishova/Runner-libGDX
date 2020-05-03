@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -16,10 +18,11 @@ import com.badlogic.gdx.math.Vector2;
 public class GameScreen implements Screen {
     private RunnerGame runnerGame;
     private SpriteBatch batch;
+    private TextureAtlas atlas;
 
-    private Texture textureBackground;
-    private Texture textureGround;
-    private Texture textureStone;
+    private TextureRegion textureBackground;
+    private TextureRegion textureGround;
+    private TextureRegion textureStone;
 
     private BitmapFont font48;
     private BitmapFont font96;
@@ -44,6 +47,10 @@ public class GameScreen implements Screen {
         return groundHeight;
     }
 
+    public TextureAtlas getAtlas() {
+        return atlas;
+    }
+
     public GameScreen (RunnerGame runnerGame, SpriteBatch batch) {
         this.runnerGame = runnerGame;
         this.batch = batch;
@@ -51,9 +58,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() { // подготовка данных для экрана
-        textureBackground = new Texture("background.png");
-        textureGround = new Texture("ground.png");
-        textureStone = new Texture("stone.png");
+        atlas = new TextureAtlas("runner.pack");
+        textureBackground = atlas.findRegion("background");
+        textureGround = atlas.findRegion("ground");
+        textureStone = atlas.findRegion("stone");
 
         playerJumpSound = Gdx.audio.newSound(Gdx.files.internal("playerSound.ogg"));
         player = new Player(this, playerJumpSound);
@@ -93,6 +101,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        batch.setProjectionMatrix(runnerGame.getViewport().getCamera().combined);
         batch.begin();
         batch.draw(textureBackground, 0, 0);
 
@@ -188,9 +197,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() { // освобождение ресурсов
-        textureBackground.dispose();
-        textureGround.dispose();
-        textureStone.dispose();
+        atlas.dispose();
         music.dispose();
         playerJumpSound.dispose();
     }

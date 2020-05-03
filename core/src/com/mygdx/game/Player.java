@@ -4,13 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player {
     private GameScreen gameScreen;
 
-    private Texture texture;
+    private TextureRegion[][] texture;
     private Vector2 position; // координаты игрока
     private Vector2 velocity; // скорость персонажа
     private Rectangle rectangle;
@@ -37,7 +38,7 @@ public class Player {
 
     public Player (GameScreen gameScreen, Sound jumpSound) {
         this.gameScreen = gameScreen;
-        this.texture = new Texture("player.png");
+        this.texture = gameScreen.getAtlas().findRegion("player").split(WIDTH, HEIGHT);
         this.position = new Vector2(0, 70);
         this.velocity = new Vector2(250.0f, 0.0f);
         this.rectangle = new Rectangle(position.x, position.y, WIDTH, HEIGHT);
@@ -54,7 +55,7 @@ public class Player {
     public void render (SpriteBatch batch) {
         int frame = (int) (time / 0.2f); // скорость анимации
         frame = frame % 2;
-        batch.draw(texture, gameScreen.getPlayerAnchor(), position.y, frame * 100, 0, WIDTH, HEIGHT);
+        batch.draw(texture[0][frame], gameScreen.getPlayerAnchor(), position.y, WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT, 1, 1, 0);
     }
 
     public void update (float dt) {
