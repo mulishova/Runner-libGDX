@@ -5,29 +5,57 @@ filter: Linear,Linear
 repeat: none
 background
   rotate: false
-  xy: 1, 185
+  xy: 1, 309
   size: 1000, 625
   orig: 1000, 625
   offset: 0, 0
   index: -1
 player
   rotate: false
-  xy: 1, 103
+  xy: 1, 227
   size: 200, 80
   orig: 200, 80
   offset: 0, 0
   index: -1
+pearl
+  rotate: false
+  xy: 1, 175
+  size: 200, 50
+  orig: 200, 50
+  offset: 0, 0
+  index: -1
+wood
+  rotate: false
+  xy: 203, 207
+  size: 125, 100
+  orig: 125, 100
+  offset: 0, 0
+  index: -1
 stone
   rotate: false
-  xy: 1, 1
+  xy: 1, 73
   size: 67, 100
   orig: 67, 100
   offset: 0, 0
   index: -1
 ground
   rotate: false
-  xy: 203, 113
+  xy: 330, 237
   size: 70, 70
   orig: 70, 70
+  offset: 0, 0
+  index: -1
+coin
+  rotate: false
+  xy: 1, 1
+  size: 60, 70
+  orig: 60, 70
+  offset: 0, 0
+  index: -1
+bread
+  rotate: false
+  xy: 70, 123
+  size: 75, 50
+  orig: 75, 50
   offset: 0, 0
   index: -1

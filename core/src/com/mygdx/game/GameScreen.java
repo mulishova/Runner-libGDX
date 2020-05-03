@@ -6,7 +6,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -23,6 +22,7 @@ public class GameScreen implements Screen {
     private TextureRegion textureBackground;
     private TextureRegion textureGround;
     private TextureRegion textureStone;
+    private TextureRegion textureWood;
 
     private BitmapFont font48;
     private BitmapFont font96;
@@ -34,7 +34,7 @@ public class GameScreen implements Screen {
     private float time;
 
     private Player player;
-    private Stone[] enemies;
+    private Enemy[] enemies;
 
     private Music music;
     private Sound playerJumpSound;
@@ -62,6 +62,7 @@ public class GameScreen implements Screen {
         textureBackground = atlas.findRegion("background");
         textureGround = atlas.findRegion("ground");
         textureStone = atlas.findRegion("stone");
+        textureWood = atlas.findRegion("wood");
 
         playerJumpSound = Gdx.audio.newSound(Gdx.files.internal("playerSound.ogg"));
         player = new Player(this, playerJumpSound);
@@ -71,10 +72,10 @@ public class GameScreen implements Screen {
         music.setVolume(0.05f);
         music.play();
 
-        enemies = new Stone[5];
-        enemies[0] = new Stone(textureStone, new Vector2(800, groundHeight));
+        enemies = new Enemy[5];
+        enemies[0] = new Enemy(textureStone, new Vector2(800, groundHeight));
         for (int i = 1; i < 5; i++) {
-            enemies[i] = new Stone(textureStone, new Vector2(enemies[i - 1].getPosition().x + MathUtils.random(300, 1000), groundHeight));
+            enemies[i] = new Enemy(textureStone, new Vector2(enemies[i - 1].getPosition().x + MathUtils.random(300, 1000), groundHeight));
         }
 
         gameOver = false;
@@ -129,9 +130,10 @@ public class GameScreen implements Screen {
 
     public void restart() { // перезапуск игры после gameOver
         gameOver = false;
+        time = 0.0f;
 
         enemies[0].setPosition(800, groundHeight);
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < enemies.length; i++) {
             enemies[i].setPosition(enemies[i - 1].getPosition().x + MathUtils.random(300, 1000), groundHeight);
         }
 
@@ -150,6 +152,21 @@ public class GameScreen implements Screen {
         return maxValue;
     }
 
+    public void generateEnemy (int index) {
+        int maxType = 1; // по умолчанию создаются только STONE
+
+        Enemy.Type type = Enemy.Type.values()[(int) (Math.random() * (maxType + 1))];
+
+        switch (type) {
+            case STONE:
+                enemies[index].setup(textureStone, getRightestEnemy() + MathUtils.random(100, 700), groundHeight, 0, 0);
+                break;
+            case WOOD:
+                enemies[index].setup(textureWood, getRightestEnemy() + MathUtils.random(100, 700), groundHeight + 1000, - MathUtils.random(100, 400), - MathUtils.random(100, 400));
+                break;
+        }
+    }
+
     public void update (float dt) {
         time += dt;
 
@@ -157,8 +174,9 @@ public class GameScreen implements Screen {
             player.update(dt);
 
             for (int i = 0; i < enemies.length; i++) {
+                enemies[i].update(dt);
                 if (enemies[i].getPosition().x < player.getPosition().x - playerAnchor - 100) { // если заехали за левую сторону экрана
-                    enemies[i].setPosition(getRightestEnemy() + MathUtils.random(300, 1000), groundHeight);
+                    generateEnemy(i);
                 }
             }
 
