@@ -1,12 +1,13 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+
 
 public class Player {
     private GameScreen gameScreen;
@@ -21,6 +22,7 @@ public class Player {
 
     private float score; // очки персонажа
     private float time; // время бега персонажа
+    private float angle; // угол поворота игрока
 
     private Sound jumpSound;
 
@@ -55,22 +57,32 @@ public class Player {
     public void render (SpriteBatch batch) {
         int frame = (int) (time / 0.2f); // скорость анимации
         frame = frame % 2;
-        batch.draw(texture[0][frame], gameScreen.getPlayerAnchor(), position.y, WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT, 1, 1, 0);
+        batch.draw(texture[0][frame], gameScreen.getPlayerAnchor(), position.y, WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT, 1, 1, angle);
     }
 
     public void update (float dt) {
+        /*if (angle > 0) {
+            if (angle > 360) {
+                angle += 30.0f * dt;
+            } else {
+                angle += 250.0f * dt;
+            }
+        }*/
+
         if (position.y > gameScreen.getGroundHeight()) {
             velocity.y -= 700.0f * dt;
         } else {
             position.y = gameScreen.getGroundHeight();
             velocity.y = 0.0f;
             time += velocity.x * dt / 100.0f;
+            angle = 0.0f;
         }
 
         if (position.y >= gameScreen.getGroundHeight() && position.y < 400) {
             if (Gdx.input.justTouched()) { // если ткнуть в экран
                 velocity.y = 500.0f;
                 jumpSound.play();
+                //angle = 1.0f;
             }
         }
 
