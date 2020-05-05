@@ -24,7 +24,7 @@ public class GameScreen implements Screen {
     private TextureRegion textureStone;
     private TextureRegion textureWood;
 
-    private BitmapFont font48;
+    private BitmapFont font32;
     private BitmapFont font96;
 
     private float groundHeight = 70.0f;
@@ -83,16 +83,19 @@ public class GameScreen implements Screen {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("amatic.ttf")); // шрифт из ttf файла
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
-        parameter.size = 48; // размер букв
+        parameter.size = 32; // размер букв
         parameter.borderColor = Color.DARK_GRAY; // границы
         parameter.borderWidth = 2; // толщина границы
         parameter.shadowOffsetX = 2; // тень
         parameter.shadowOffsetY = -2;
         parameter.shadowColor = Color.DARK_GRAY;
-        font48 = generator.generateFont(parameter); // шрифт
+        font32 = generator.generateFont(parameter); // шрифт
         parameter.size = 96;
         font96 = generator.generateFont(parameter);
         generator.dispose();
+
+        HighScore.createTable();
+        HighScore.loadTable();
     }
 
     @Override
@@ -116,13 +119,14 @@ public class GameScreen implements Screen {
             enemies[i].render(batch, player.getPosition().x - playerAnchor);
         }
 
-        font48.draw(batch, "SCORE: " + (int)player.getScore(), 20, 600);
+        font32.draw(batch, "TOP PLAYER: " + HighScore.topPlayerName + " " + HighScore.topPlayerScore, 20, 600);
+        font32.draw(batch, "SCORE: " + (int)player.getScore(), 20, 550);
 
         if (gameOver) {
             font96.draw(batch, "GAME OVER", 380, 400);
-            font48.setColor(1, 1, 1, 0.5f + 0.5f * (float) Math.sin(time * 4.0f));
-            font48.draw(batch, "Tap to RESTART", 410, 300);
-            font48.setColor(1, 1, 1, 1);
+            font32.setColor(1, 1, 1, 0.5f + 0.5f * (float) Math.sin(time * 4.0f));
+            font32.draw(batch, "Tap to RESTART", 410, 300);
+            font32.setColor(1, 1, 1, 1);
         }
 
         batch.end();
@@ -183,6 +187,7 @@ public class GameScreen implements Screen {
             for (int i = 0; i < enemies.length; i++) {
                 if (enemies[i].getHitArea().overlaps(player.getHitArea())) {
                     gameOver = true;
+                    HighScore.updateTable("Player", (int)player.getScore());
                     break;
                 }
             }
