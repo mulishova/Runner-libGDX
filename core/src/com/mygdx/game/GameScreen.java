@@ -181,7 +181,7 @@ public class GameScreen implements Screen {
             }
 
             for (int i = 0; i < enemies.length; i++) {
-                if (enemies[i].getRectangle().overlaps(player.getRectangle())) {
+                if (enemies[i].getHitArea().overlaps(player.getHitArea())) {
                     gameOver = true;
                     break;
                 }
