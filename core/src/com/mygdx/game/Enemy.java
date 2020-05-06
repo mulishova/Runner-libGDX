@@ -1,10 +1,8 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Enemy {
@@ -23,10 +21,6 @@ public class Enemy {
 
     public Vector2 getPosition() {
         return position;
-    }
-
-    public Vector2 getVelocity() {
-        return velocity;
     }
 
     /* public Rectangle getRectangle() {

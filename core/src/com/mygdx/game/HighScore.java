@@ -30,6 +30,10 @@ public class HighScore {
     }
 
     public static void createTable () {
+        if (Gdx.files.local("highscore.txt").exists()) {
+            return;
+        }
+
         Writer writer = null;
         try {
             writer = Gdx.files.local("highscore.txt").writer(false); // полная перезапись файла

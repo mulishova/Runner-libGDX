@@ -223,5 +223,7 @@ public class GameScreen implements Screen {
         atlas.dispose();
         music.dispose();
         playerJumpSound.dispose();
+        font96.dispose();
+        font32.dispose();
     }
 }
