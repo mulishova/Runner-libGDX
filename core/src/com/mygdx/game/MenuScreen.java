@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class MenuScreen implements Screen {
     private RunnerGame runnerGame;
@@ -44,7 +45,21 @@ public class MenuScreen implements Screen {
         font96 = generator.generateFont(parameter);
         generator.dispose();
 
+        createGUI();
+    }
+
+    public void createGUI () {
         stage = new Stage(runnerGame.getViewport(), batch);
+        skin = new Skin(atlas);
+        Gdx.input.setInputProcessor(stage); // обрабатываем события ввода на элементы интерфейса stage
+
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(); // стиль кнопки
+        textButtonStyle.up = skin.getDrawable("play"); // если кнопку никто не трогает
+        textButtonStyle.font = font96;
+
+        skin.add("tbs", textButtonStyle); // задаем название стиля
+
+        TextButton btnNewGame = new TextButton("START", skin, "tbs");
     }
 
     @Override
@@ -58,8 +73,9 @@ public class MenuScreen implements Screen {
         stage.draw();
     }
 
-    public void update () {
-        
+    public void update (float dt) {
+        stage.act(dt); // stage реагирует на наши действия
+
     }
 
     @Override

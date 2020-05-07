@@ -96,6 +96,8 @@ public class GameScreen implements Screen {
 
         HighScore.createTable();
         HighScore.loadTable();
+
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override
