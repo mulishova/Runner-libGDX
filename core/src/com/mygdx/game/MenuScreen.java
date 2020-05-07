@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class MenuScreen implements Screen {
     private RunnerGame runnerGame;
@@ -22,6 +24,7 @@ public class MenuScreen implements Screen {
     private TextureAtlas atlas;
     private TextureRegion textureBackground;
     private BitmapFont font96;
+    private BitmapFont font32;
 
     public MenuScreen(RunnerGame runnerGame, SpriteBatch batch) {
         this.runnerGame = runnerGame;
@@ -43,6 +46,8 @@ public class MenuScreen implements Screen {
         parameter.shadowOffsetY = -2;
         parameter.shadowColor = Color.DARK_GRAY;
         font96 = generator.generateFont(parameter);
+        parameter.size = 32;
+        font32 = generator.generateFont(parameter);
         generator.dispose();
 
         createGUI();
@@ -54,12 +59,32 @@ public class MenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage); // обрабатываем события ввода на элементы интерфейса stage
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(); // стиль кнопки
-        textButtonStyle.up = skin.getDrawable("play"); // если кнопку никто не трогает
-        textButtonStyle.font = font96;
-
+        textButtonStyle.up = skin.getDrawable("blue_button00"); // если кнопку никто не трогает
+        textButtonStyle.font = font32;
         skin.add("tbs", textButtonStyle); // задаем название стиля
 
-        TextButton btnNewGame = new TextButton("START", skin, "tbs");
+        TextButton btnNewGame = new TextButton("Play", skin, "tbs");
+        TextButton btnExitGame = new TextButton("Exit", skin, "tbs");
+
+        btnNewGame.setPosition(405, 200);
+        btnExitGame.setPosition(405, 120);
+
+        stage.addActor(btnNewGame);
+        stage.addActor(btnExitGame);
+
+        btnNewGame.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                runnerGame.switchScreen(RunnerGame.Screens.GAME);
+            }
+        });
+
+        btnExitGame.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
     }
 
     @Override
@@ -103,5 +128,6 @@ public class MenuScreen implements Screen {
     public void dispose() {
         atlas.dispose();
         font96.dispose();
+        font32.dispose();
     }
 }

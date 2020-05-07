@@ -5,78 +5,50 @@ filter: Linear,Linear
 repeat: none
 background
   rotate: false
-  xy: 1, 369
+  xy: 1, 150
   size: 1000, 625
   orig: 1000, 625
   offset: 0, 0
   index: -1
-leader
+blue_button00
   rotate: false
-  xy: 1, 297
-  size: 500, 70
-  orig: 500, 70
+  xy: 1, 99
+  size: 190, 49
+  orig: 190, 49
   offset: 0, 0
   index: -1
-play
+blue_button02
   rotate: false
-  xy: 1, 225
-  size: 500, 70
-  orig: 500, 70
+  xy: 1, 48
+  size: 190, 49
+  orig: 190, 49
   offset: 0, 0
   index: -1
-settings
+blue_button04
   rotate: false
-  xy: 1, 153
-  size: 500, 70
-  orig: 500, 70
+  xy: 193, 99
+  size: 190, 49
+  orig: 190, 49
   offset: 0, 0
   index: -1
-decline_@
-  rotate: false
-  xy: 503, 217
-  size: 150, 150
-  orig: 150, 150
-  offset: 0, 0
-  index: -1
-leader
+blue_button01
   rotate: false
   xy: 1, 1
-  size: 150, 150
-  orig: 150, 150
+  size: 190, 45
+  orig: 190, 45
   offset: 0, 0
-  index: 2
-plus
+  index: -1
+blue_button03
   rotate: false
-  xy: 655, 217
-  size: 150, 150
-  orig: 150, 150
+  xy: 193, 52
+  size: 190, 45
+  orig: 190, 45
   offset: 0, 0
-  index: 2
-question
+  index: -1
+blue_button05
   rotate: false
-  xy: 153, 1
-  size: 150, 150
-  orig: 150, 150
+  xy: 385, 103
+  size: 190, 45
+  orig: 190, 45
   offset: 0, 0
-  index: 2
-reload
-  rotate: false
-  xy: 807, 217
-  size: 150, 150
-  orig: 150, 150
-  offset: 0, 0
-  index: 2
-settings
-  rotate: false
-  xy: 305, 1
-  size: 150, 150
-  orig: 150, 150
-  offset: 0, 0
-  index: 2
-warning
-  rotate: false
-  xy: 503, 65
-  size: 150, 150
-  orig: 150, 150
-  offset: 0, 0
-  index: 2
+  index: -1

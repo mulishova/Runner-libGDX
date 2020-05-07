@@ -125,9 +125,9 @@ public class GameScreen implements Screen {
         font32.draw(batch, "SCORE: " + (int)player.getScore(), 20, 550);
 
         if (gameOver) {
-            font96.draw(batch, "GAME OVER", 380, 400);
+            font96.draw(batch, "GAME OVER", 230, 400);
             font32.setColor(1, 1, 1, 0.5f + 0.5f * (float) Math.sin(time * 4.0f));
-            font32.draw(batch, "Tap to RESTART", 410, 300);
+            font32.draw(batch, "Tap to RESTART", 380, 300);
             font32.setColor(1, 1, 1, 1);
         }
 
