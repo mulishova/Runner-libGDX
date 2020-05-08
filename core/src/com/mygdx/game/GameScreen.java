@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class GameScreen implements Screen {
@@ -133,6 +134,16 @@ public class GameScreen implements Screen {
                 paused = !paused;
             }
         });
+
+        /*TextField.TextFieldStyle tfs= new TextField.TextFieldStyle();
+        tfs.font = font32;
+        tfs.fontColor = Color.WHITE;
+        tfs.background = skin.getDrawable("ground");
+        skin.add("tfs", tfs);
+
+        TextField field = new TextField("A", skin, "tfs");
+        stage.addActor(field);
+        field.setPosition(500, 500);*/
 
         Gdx.input.setInputProcessor(stage);
     }
