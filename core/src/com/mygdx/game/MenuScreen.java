@@ -129,5 +129,7 @@ public class MenuScreen implements Screen {
         atlas.dispose();
         font96.dispose();
         font32.dispose();
+        skin.dispose();
+        stage.dispose();
     }
 }
