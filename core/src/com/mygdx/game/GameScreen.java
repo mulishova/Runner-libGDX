@@ -21,6 +21,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+
+import static com.mygdx.game.HighScore.updateTable;
 
 public class GameScreen implements Screen {
     private RunnerGame runnerGame;
@@ -31,6 +34,8 @@ public class GameScreen implements Screen {
     private Skin skin;
     private boolean paused;
     //private Group endGameGroup;
+    private TextButton btnPause;
+    //private TextButton btnOK;
 
     private TextureRegion textureBackground;
     private TextureRegion textureGround;
@@ -126,7 +131,7 @@ public class GameScreen implements Screen {
         textButtonStyle.font = font32;
         skin.add("tbs", textButtonStyle); // задаем название стиля
 
-        TextButton btnPause = new TextButton("P", skin, "tbs");
+        btnPause = new TextButton("P", skin, "tbs");
         btnPause.setSize(50, 50);
         btnPause.setPosition(940, 565);
         stage.addActor(btnPause);
@@ -138,22 +143,42 @@ public class GameScreen implements Screen {
             }
         });
 
-        /*TextField.TextFieldStyle tfs= new TextField.TextFieldStyle();
+        /*btnOK = new TextButton("ok", skin, "tbs");
+        btnOK.setSize(50, 50);
+        btnOK.setPosition(940, 565);
+
+        TextField.TextFieldStyle tfs= new TextField.TextFieldStyle();
         tfs.font = font32;
         tfs.fontColor = Color.WHITE;
-        tfs.background = skin.getDrawable("ground");
+        tfs.background = skin.getDrawable("endGame");
+
+        skin.add("cursor", skin.getDrawable("cursor"));
+        tfs.cursor = skin.getDrawable("cursor");
         skin.add("tfs", tfs);
 
-        TextField field = new TextField("A", skin, "tfs");
+        final TextField field = new TextField("Name", skin, "tfs");
         //stage.addActor(field);
-        field.setPosition(100, 100);*/
+        field.setSize(250, 50);
+        field.setPosition(680, 565);
 
-        /*endGameGroup = new Group(); // группа элементов
-        Image image = new Image(skin.getDrawable("endGame"));
-        endGameGroup.addActor(image);
+        btnOK.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                String name = field.getText();
+
+                if (name.isEmpty()) {
+                    name = "Player";
+                }
+
+                HighScore.updateTable(name, (int)player.getScore());
+            }
+        });
+
+        endGameGroup = new Group(); // группа элементов
+        endGameGroup.addActor(btnOK);
         endGameGroup.addActor(field);
         endGameGroup.setVisible(false);
-        endGameGroup.setPosition(300, 200);
+        endGameGroup.setPosition(0, 0);
 
         stage.addActor(endGameGroup);*/
 
@@ -199,6 +224,7 @@ public class GameScreen implements Screen {
     public void restart() { // перезапуск игры после gameOver
         gameOver = false;
         //endGameGroup.setVisible(false);
+        btnPause.setVisible(true);
         time = 0.0f;
 
         enemies[0].setPosition(800, groundHeight);
@@ -254,7 +280,8 @@ public class GameScreen implements Screen {
                     if (enemies[i].getHitArea().overlaps(player.getHitArea())) {
                         gameOver = true;
                         //endGameGroup.setVisible(true);
-                        HighScore.updateTable("Player", (int) player.getScore());
+                        btnPause.setVisible(false);
+                        updateTable("Player", (int) player.getScore());
                         break;
                     }
                 }

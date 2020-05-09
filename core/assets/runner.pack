@@ -66,3 +66,10 @@ bread
   orig: 75, 50
   offset: 0, 0
   index: -1
+cursor
+  rotate: false
+  xy: 1003, 962
+  size: 8, 50
+  orig: 8, 50
+  offset: 0, 0
+  index: -1
