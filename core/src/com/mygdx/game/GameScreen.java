@@ -14,7 +14,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -28,6 +30,7 @@ public class GameScreen implements Screen {
     private Stage stage;
     private Skin skin;
     private boolean paused;
+    //private Group endGameGroup;
 
     private TextureRegion textureBackground;
     private TextureRegion textureGround;
@@ -142,8 +145,17 @@ public class GameScreen implements Screen {
         skin.add("tfs", tfs);
 
         TextField field = new TextField("A", skin, "tfs");
-        stage.addActor(field);
-        field.setPosition(500, 500);*/
+        //stage.addActor(field);
+        field.setPosition(100, 100);*/
+
+        /*endGameGroup = new Group(); // группа элементов
+        Image image = new Image(skin.getDrawable("endGame"));
+        endGameGroup.addActor(image);
+        endGameGroup.addActor(field);
+        endGameGroup.setVisible(false);
+        endGameGroup.setPosition(300, 200);
+
+        stage.addActor(endGameGroup);*/
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -186,6 +198,7 @@ public class GameScreen implements Screen {
 
     public void restart() { // перезапуск игры после gameOver
         gameOver = false;
+        //endGameGroup.setVisible(false);
         time = 0.0f;
 
         enemies[0].setPosition(800, groundHeight);
@@ -240,6 +253,7 @@ public class GameScreen implements Screen {
                 for (int i = 0; i < enemies.length; i++) {
                     if (enemies[i].getHitArea().overlaps(player.getHitArea())) {
                         gameOver = true;
+                        //endGameGroup.setVisible(true);
                         HighScore.updateTable("Player", (int) player.getScore());
                         break;
                     }
